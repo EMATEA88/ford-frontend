@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== MOBILE APP RESET ===== */
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* REMOVE SCROLL GLOBAL */
+  background-color: #0B0E11;
+  color-scheme: dark;
+  color: #EAECEF;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Remove scroll lateral completamente */
+body {
+  overscroll-behavior: none;
+  touch-action: manipulation;
+}
+
+/* ===== FLOAT ANIMATION ===== */
+
+@keyframes floatSoft {
+  0%   { transform: translateY(0px); }
+  50%  { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+
+.float-soft {
+  animation: floatSoft 3.5s ease-in-out infinite;
+}
+
+/* ===== BINANCE COMPONENT SYSTEM ===== */
+
+.binance-card {
+  @apply bg-[#1E2329] border border-[#2B3139] rounded-xl;
+}
+
+.binance-input {
+  @apply w-full h-12 px-3 rounded-lg
+  bg-[#1E2329]
+  border border-[#2B3139]
+  text-[#EAECEF]
+  placeholder-[#848E9C]
+  focus:border-[#FCD535]
+  outline-none transition;
+}
+
+.binance-button-primary {
+  @apply bg-[#FCD535] text-black font-medium
+  hover:brightness-110 transition rounded-lg;
+}
+
+.binance-button-dark {
+  @apply bg-[#1E2329] border border-[#2B3139]
+  hover:bg-[#2B3139] transition rounded-lg;
+}
+
+@keyframes floatBell {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: floatBell 2.5s ease-in-out infinite;
+}
+
+/* ===== REMOVE INPUT NUMBER SPINNERS ===== */
+
+/* Chrome, Safari, Edge */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
