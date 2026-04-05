@@ -10,7 +10,7 @@ export default function Register() {
   const navigate = useNavigate()
   const [params] = useSearchParams()
 
-  const referralCode = params.get('ref') || ''
+  const referralCode = (params.get('ref') || '').toUpperCase()
 
   const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
@@ -46,8 +46,17 @@ export default function Register() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
 
+    // 🔒 Bloqueio contra múltiplos submits
+    if (loading) return
+
     if (!referralCode) {
       showError('Acesso inválido: use um link de convite')
+      return
+    }
+
+    // 🔒 Validação de código
+    if (!/^[A-Z0-9]+$/.test(referralCode)) {
+      showError('Código de convite inválido')
       return
     }
 
@@ -66,14 +75,21 @@ export default function Register() {
       return
     }
 
+    // 📱 Normalização do telefone
+    const cleanPhone = phone.replace(/\D/g, '')
+
+    const finalPhone = cleanPhone.startsWith('244')
+      ? `+${cleanPhone}`
+      : `+244${cleanPhone}`
+
     try {
       setLoading(true)
 
       await registerUser(
-  `+244${phone.replace(/\D/g, '')}`,
-  password,
-  referralCode
-)
+        finalPhone,
+        password,
+        referralCode
+      )
 
       showSuccess('Conta criada com sucesso')
 
