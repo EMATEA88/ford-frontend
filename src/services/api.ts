@@ -1,11 +1,21 @@
 import axios from 'axios'
 
 /* =========================
+   BASE URL
+========================= */
+
+const baseURL = import.meta.env.VITE_API_URL
+
+if (!baseURL) {
+  throw new Error('VITE_API_URL não definida')
+}
+
+/* =========================
    AXIOS INSTANCE
 ========================= */
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3334/api',
+  baseURL,
 })
 
 /* =========================
@@ -16,6 +26,7 @@ api.interceptors.request.use(config => {
   const token = localStorage.getItem('token')
 
   if (token) {
+    config.headers = config.headers ?? {}
     config.headers.Authorization = `Bearer ${token}`
   }
 
@@ -46,7 +57,6 @@ api.interceptors.response.use(
    AUTH
 ========================= */
 
-// ✅ REGISTER (com referral obrigatório)
 export const registerUser = async (
   phone: string,
   password: string,
@@ -61,7 +71,6 @@ export const registerUser = async (
   return data
 }
 
-// ✅ LOGIN (corrigido para phone)
 export const loginUser = async (
   phone: string,
   password: string
