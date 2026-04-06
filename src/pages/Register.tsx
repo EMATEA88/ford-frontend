@@ -27,7 +27,7 @@ export default function Register() {
     type: 'success' as 'success' | 'error'
   })
 
-  /* 🔒 BLOQUEIO DE ACESSO SEM REFERRAL */
+  /* 🔒 BLOQUEIO SEM REFERRAL */
   useEffect(() => {
     if (!referralCode) {
       navigate('/')
@@ -121,110 +121,115 @@ export default function Register() {
         onClose={() => setToast(prev => ({ ...prev, visible: false }))}
       />
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      {/* 🔥 CONTAINER COM SCROLL */}
+      <div className="w-full max-w-md mx-auto px-4 pb-24 overflow-y-auto">
 
-        {/* 🔒 CÓDIGO DE CONVITE */}
-        <div className="space-y-1">
-          <label className="text-xs text-gray-400">Código de convite</label>
+        <form onSubmit={handleSubmit} className="space-y-5">
 
-          <input
-            type="text"
-            value={referralCode}
-            readOnly
+          {/* CÓDIGO DE CONVITE */}
+          <div className="space-y-1">
+            <label className="text-xs text-gray-400">Código de convite</label>
+
+            <input
+              type="text"
+              value={referralCode}
+              readOnly
+              className="
+                w-full h-12 px-3 rounded-xl
+                bg-[#05070a] border border-yellow-500
+                text-yellow-400 font-semibold tracking-wider
+                cursor-not-allowed
+              "
+            />
+
+            <p className="text-[11px] text-gray-500">
+              Este código foi aplicado automaticamente
+            </p>
+          </div>
+
+          {/* TELEFONE */}
+          <div className="space-y-1">
+            <label className="text-xs text-gray-400">Telefone</label>
+            <div className="flex items-center bg-[#0b0e11] border border-[#1f2937] rounded-xl px-3">
+              <span className="text-gray-400 text-sm mr-2">+244</span>
+              <input
+                type="tel"
+                placeholder="912345678"
+                className="bg-transparent w-full h-12 outline-none text-white"
+                value={phone}
+                onChange={e => setPhone(e.target.value)}
+              />
+            </div>
+          </div>
+
+          {/* PASSWORD */}
+          <div className="space-y-1">
+            <label className="text-xs text-gray-400">Password</label>
+
+            <div className="relative">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                className="w-full h-12 px-3 pr-12 rounded-xl bg-[#0b0e11] border border-[#1f2937] text-white"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(v => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+              >
+                {showPassword ? <EyeSlash size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
+          </div>
+
+          {/* CONFIRM PASSWORD */}
+          <div className="space-y-1">
+            <label className="text-xs text-gray-400">Confirmar password</label>
+
+            <div className="relative">
+              <input
+                type={showConfirmPassword ? 'text' : 'password'}
+                className="w-full h-12 px-3 pr-12 rounded-xl bg-[#0b0e11] border border-[#1f2937] text-white"
+                value={confirmPassword}
+                onChange={e => setConfirmPassword(e.target.value)}
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(v => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+              >
+                {showConfirmPassword ? <EyeSlash size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
+          </div>
+
+          {/* BOTÃO */}
+          <button
+            type="submit"
+            disabled={loading}
             className="
-              w-full h-12 px-3 rounded-xl
-              bg-[#05070a] border border-yellow-500
-              text-yellow-400 font-semibold tracking-wider
-              cursor-not-allowed
+              w-full h-12 rounded-xl font-semibold text-black
+              bg-gradient-to-r from-yellow-400 to-yellow-500
+              active:scale-95 transition-all
+              disabled:opacity-50
             "
-          />
+          >
+            {loading ? 'Criando conta...' : 'Criar conta'}
+          </button>
 
-          <p className="text-[11px] text-gray-500">
-            Este código foi aplicado automaticamente
-          </p>
-        </div>
-
-        {/* TELEFONE */}
-        <div className="space-y-1">
-          <label className="text-xs text-gray-400">Telefone</label>
-          <div className="flex items-center bg-[#0b0e11] border border-[#1f2937] rounded-xl px-3">
-            <span className="text-gray-400 text-sm mr-2">+244</span>
-            <input
-              type="tel"
-              placeholder="912345678"
-              className="bg-transparent w-full h-12 outline-none text-white"
-              value={phone}
-              onChange={e => setPhone(e.target.value)}
-            />
+          <div className="text-center text-sm text-gray-400 pb-10">
+            Já tens conta?{' '}
+            <Link to="/login" className="text-yellow-400">
+              Entrar
+            </Link>
           </div>
-        </div>
 
-        {/* PASSWORD */}
-        <div className="space-y-1">
-          <label className="text-xs text-gray-400">Password</label>
+        </form>
 
-          <div className="relative">
-            <input
-              type={showPassword ? 'text' : 'password'}
-              className="w-full h-12 px-3 pr-12 rounded-xl bg-[#0b0e11] border border-[#1f2937] text-white"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-            />
-
-            <button
-              type="button"
-              onClick={() => setShowPassword(v => !v)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
-            >
-              {showPassword ? <EyeSlash size={20} /> : <Eye size={20} />}
-            </button>
-          </div>
-        </div>
-
-        {/* CONFIRM PASSWORD */}
-        <div className="space-y-1">
-          <label className="text-xs text-gray-400">Confirmar password</label>
-
-          <div className="relative">
-            <input
-              type={showConfirmPassword ? 'text' : 'password'}
-              className="w-full h-12 px-3 pr-12 rounded-xl bg-[#0b0e11] border border-[#1f2937] text-white"
-              value={confirmPassword}
-              onChange={e => setConfirmPassword(e.target.value)}
-            />
-
-            <button
-              type="button"
-              onClick={() => setShowConfirmPassword(v => !v)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
-            >
-              {showConfirmPassword ? <EyeSlash size={20} /> : <Eye size={20} />}
-            </button>
-          </div>
-        </div>
-
-        {/* BOTÃO */}
-        <button
-          type="submit"
-          disabled={loading}
-          className="
-            w-full h-12 rounded-xl font-semibold text-black
-            bg-gradient-to-r from-yellow-400 to-yellow-500
-            active:scale-95 transition-all
-            disabled:opacity-50
-          "
-        >
-          {loading ? 'Criando conta...' : 'Criar conta'}
-        </button>
-
-        <div className="text-center text-sm text-gray-400">
-          Já tens conta?{' '}
-          <Link to="/login" className="text-yellow-400">
-            Entrar
-          </Link>
-        </div>
-
-      </form>
+      </div>
 
     </AuthLayout>
   )
