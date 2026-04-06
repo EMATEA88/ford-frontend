@@ -27,6 +27,13 @@ export default function Register() {
     type: 'success' as 'success' | 'error'
   })
 
+  /* 🔒 BLOQUEIO DE ACESSO SEM REFERRAL */
+  useEffect(() => {
+    if (!referralCode) {
+      navigate('/')
+    }
+  }, [])
+
   useEffect(() => {
     if (!toast.visible) return
     const t = setTimeout(() => {
@@ -46,7 +53,6 @@ export default function Register() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
 
-    // 🔒 Bloqueio contra múltiplos submits
     if (loading) return
 
     if (!referralCode) {
@@ -54,7 +60,6 @@ export default function Register() {
       return
     }
 
-    // 🔒 Validação de código
     if (!/^[A-Z0-9]+$/.test(referralCode)) {
       showError('Código de convite inválido')
       return
@@ -75,7 +80,6 @@ export default function Register() {
       return
     }
 
-    // 📱 Normalização do telefone
     const cleanPhone = phone.replace(/\D/g, '')
 
     const finalPhone = cleanPhone.startsWith('244')
@@ -118,6 +122,27 @@ export default function Register() {
       />
 
       <form onSubmit={handleSubmit} className="space-y-5">
+
+        {/* 🔒 CÓDIGO DE CONVITE */}
+        <div className="space-y-1">
+          <label className="text-xs text-gray-400">Código de convite</label>
+
+          <input
+            type="text"
+            value={referralCode}
+            readOnly
+            className="
+              w-full h-12 px-3 rounded-xl
+              bg-[#05070a] border border-yellow-500
+              text-yellow-400 font-semibold tracking-wider
+              cursor-not-allowed
+            "
+          />
+
+          <p className="text-[11px] text-gray-500">
+            Este código foi aplicado automaticamente
+          </p>
+        </div>
 
         {/* TELEFONE */}
         <div className="space-y-1">
