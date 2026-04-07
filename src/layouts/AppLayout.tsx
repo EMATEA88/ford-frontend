@@ -1,7 +1,7 @@
 import { Outlet, useNavigate, useLocation } from "react-router-dom"
 import { useEffect, useState } from "react"
 import BottomNav from "../components/BottomNav"
-import { ArrowLeft, MessageCircle } from "lucide-react"
+import { ArrowLeft, MessageCircle, Users, Headset } from "lucide-react"
 import { connectSocket } from "../services/socket"
 
 export default function AppLayout() {
@@ -74,6 +74,7 @@ function SupportButton() {
       "https://chat.whatsapp.com/Cf8sqTXqKVL1uAoH8J6D9i?mode=gi_t",
       "_blank"
     )
+    setOpen(false)
   }
 
   function openManager() {
@@ -81,66 +82,89 @@ function SupportButton() {
       "https://wa.me/447469665361",
       "_blank"
     )
+    setOpen(false)
   }
 
   return (
     <div className="relative">
 
-      {/* MENU */}
+      {/* MENU FLUTUANTE */}
       {open && (
         <div className="
-      absolute bottom-14 right-0
-      bg-[#1E2329]
-      border border-[#2B3139]
-      rounded-2xl p-2
-      space-y-2
-      shadow-xl
-      w-48
-    ">
-
+          absolute bottom-16 right-0
+          bg-[#1E2329]
+          border border-[#2B3139]
+          rounded-2xl p-2
+          space-y-1
+          shadow-2xl
+          w-52
+          animate-in slide-in-from-bottom-5 duration-200
+        ">
+          <p className="text-[10px] text-[#848E9C] px-3 py-1 font-bold uppercase tracking-wider">Suporte Oficial</p>
+          
           <button
             onClick={openGroup}
             className="
-          w-full px-4 py-2 text-sm text-left
-          hover:bg-[#2B3139]
-          rounded-lg
-          text-white
-        "
+              w-full px-4 py-3 text-sm text-left
+              hover:bg-[#2B3139]
+              rounded-xl
+              text-white flex items-center gap-3 transition
+            "
           >
+            <div className="bg-[#25D366]/10 p-2 rounded-lg">
+                <Users size={18} className="text-[#25D366]" />
+            </div>
             Grupo WhatsApp
           </button>
 
           <button
             onClick={openManager}
             className="
-          w-full px-4 py-2 text-sm text-left
-          hover:bg-[#2B3139]
-          rounded-lg
-          text-white
-        "
+              w-full px-4 py-3 text-sm text-left
+              hover:bg-[#2B3139]
+              rounded-xl
+              text-white flex items-center gap-3 transition
+            "
           >
+            <div className="bg-[#25D366]/10 p-2 rounded-lg">
+                <Headset size={18} className="text-[#25D366]" />
+            </div>
             Falar com gerente
           </button>
-
         </div>
       )}
 
-      {/* BOTÃO ALTERADO PARA AZUL */}
-      <button
-        onClick={() => setOpen(!open)}
-        className="
-      w-12 h-12 rounded-full
-      bg-[#2F66EE] 
-      text-white
-      flex items-center justify-center
-      hover:bg-[#1a54db]
-      transition-all
-      shadow-lg
-      active:scale-95
-    "
-      >
-        <MessageCircle size={24} fill="currentColor" className="text-white" />
-      </button>
+      {/* BOTÃO WHATSAPP ESTILIZADO */}
+      <div className="relative">
+        {/* Efeito de Ondas (Pulse) ao redor do botão */}
+        {!open && (
+            <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20"></span>
+        )}
+        
+        <button
+            onClick={() => setOpen(!open)}
+            className={`
+            relative w-14 h-14 rounded-full
+            ${open ? 'bg-[#1E2329] border border-[#2B3139]' : 'bg-[#25D366] shadow-[0_8px_16px_rgba(37,211,102,0.3)]'}
+            text-white
+            flex items-center justify-center
+            hover:scale-110
+            active:scale-90
+            transition-all duration-300
+            z-10
+            `}
+        >
+            <MessageCircle size={28} fill={open ? "none" : "currentColor"} className={open ? "text-[#848E9C]" : "text-white"} />
+            
+            {/* Ponto de Notificação Vermelho */}
+            {!open && (
+                <span className="absolute top-0 right-0 flex h-4 w-4">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-4 w-4 bg-red-500 border-2 border-[#0B0E11]"></span>
+                </span>
+            )}
+        </button>
+      </div>
 
     </div>
 
