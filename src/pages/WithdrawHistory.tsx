@@ -7,7 +7,7 @@ interface Withdrawal {
   id: number
   amount: number
   fee: number
-  netAmount: number
+  netAmount?: number // 🔥 agora opcional
   status: string
   createdAt: string
 }
@@ -105,6 +105,11 @@ export default function WithdrawHistory() {
           const meta = getStatusMeta(w.status)
           const Icon = meta.icon
 
+          // 🔥 CORREÇÃO PRINCIPAL
+          const net = Number(
+            w.netAmount ?? (Number(w.amount) - Number(w.fee))
+          )
+
           return (
             <div
               key={w.id}
@@ -171,7 +176,7 @@ export default function WithdrawHistory() {
                 <div className="flex justify-between bg-[#0B0E11] p-3 rounded-xl">
                   <span className="text-emerald-400 text-xs">Líquido</span>
                   <span className="font-semibold text-emerald-400">
-                    {Number(w.netAmount).toLocaleString()} Kz
+                    {net.toLocaleString()} Kz
                   </span>
                 </div>
 

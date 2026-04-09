@@ -4,6 +4,7 @@ export interface WithdrawalResponse {
   id: number
   amount: number
   fee: number
+  netAmount: number // 🔥 ADICIONA
   status: string
   createdAt: string
 }
