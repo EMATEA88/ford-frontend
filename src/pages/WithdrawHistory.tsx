@@ -36,9 +36,9 @@ export default function WithdrawHistory() {
           icon: CheckCircle
         }
 
-      case 'WAITING':
+      case 'PENDING':
         return {
-          label: 'waiting',
+          label: 'pending',
           color: 'text-yellow-400',
           bg: 'bg-yellow-500/10',
           icon: Clock
