@@ -26,41 +26,42 @@ export default function WithdrawHistory() {
   }, [])
 
   function getStatusMeta(status: string) {
-    switch (status) {
+  switch (status) {
 
-      case 'SUCCESS':
-        return {
-          label: 'success',
-          color: 'text-green-400',
-          bg: 'bg-green-500/10',
-          icon: CheckCircle
-        }
+    case 'SUCCESS':
+    case 'APPROVED': // 🔥 trata APPROVED como SUCCESS
+      return {
+        label: 'success',
+        color: 'text-green-400',
+        bg: 'bg-green-500/10',
+        icon: CheckCircle
+      }
 
-      case 'PENDING':
-        return {
-          label: 'pending',
-          color: 'text-yellow-400',
-          bg: 'bg-yellow-500/10',
-          icon: Clock
-        }
+    case 'PENDING':
+      return {
+        label: 'pending',
+        color: 'text-yellow-400',
+        bg: 'bg-yellow-500/10',
+        icon: Clock
+      }
 
-      case 'REJECTED':
-        return {
-          label: 'rejeitado',
-          color: 'text-red-400',
-          bg: 'bg-red-500/10',
-          icon: XCircle
-        }
+    case 'REJECTED':
+      return {
+        label: 'rejeitado',
+        color: 'text-red-400',
+        bg: 'bg-red-500/10',
+        icon: XCircle
+      }
 
-      default:
-        return {
-          label: status.toLowerCase(),
-          color: 'text-[#EAECEF]',
-          bg: 'bg-[#2B3139]',
-          icon: Clock
-        }
-    }
+    default:
+      return {
+        label: status.toLowerCase(),
+        color: 'text-[#EAECEF]',
+        bg: 'bg-[#2B3139]',
+        icon: Clock
+      }
   }
+}
 
   return (
     <div className="min-h-screen bg-[#0B0E11] text-[#EAECEF] pb-28">
